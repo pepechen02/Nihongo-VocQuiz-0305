@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3月5日（教えてもらったことは忘れる）單字測驗 — JLPT N1</title>
+<style>
+html,body{margin:0;padding:0;background:#121811;color-scheme:dark}
+#fq{--cream:#121811;--paper:#1C241A;--ink:#E9EDE2;--ink-soft:#A3B199;--green-deep:#8FCBA5;--green-leaf:#4F8A5B;--green-pale:#24311F;--coral:#E28B82;--gold:#E7C476;--gold-pale:#3A331F;--gold-ink:#E7C476;--wrong:#E08A82;--wrong-pale:#3A2725;--border:#33402F;--shadow:0 6px 18px rgba(0,0,0,0.45);background:var(--cream);color:var(--ink);font-family:"Noto Sans JP","Hiragino Sans","Microsoft JhengHei","PingFang TC",Avenir Next,"Segoe UI",ui-sans-serif,system-ui,sans-serif;line-height:1.6;min-height:100vh}
+#fq *{box-sizing:border-box}
+#fq h1,#fq h2,#fq h3{font-family:"Noto Serif JP","Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:700;margin:0 0 .3em 0;color:var(--green-deep)}
+#fq #app{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+#fq .topbar{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+#fq .topbar .mark{width:44px;height:44px;flex:0 0 auto;color:var(--gold);display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border);border-radius:12px;background:var(--paper)}
+#fq .ico{display:inline-block;vertical-align:-0.2em}
+#fq .module-card .icon{width:44px;height:44px;border-radius:12px;background:var(--green-pale);color:var(--green-deep);display:flex;align-items:center;justify-content:center}
+#fq .ico-ok{color:var(--green-deep)}
+#fq .ico-ng{color:var(--wrong)}
+#fq .ico-no{color:var(--ink-soft)}
+#fq .verdict .ico,#fq .wt .ico{margin-right:6px}
+#fq .topbar h1{font-size:20px;margin:0;line-height:1.4}
+#fq .topbar .sub{color:var(--ink-soft);font-size:13px;margin-top:2px}
+#fq .hero{background:linear-gradient(160deg,var(--green-pale) 0%,var(--cream) 70%);border:1px solid var(--border);border-radius:22px 22px 8px 22px;padding:20px 22px 18px;margin-bottom:20px}
+#fq .hero p{color:var(--ink-soft);font-size:14.5px;max-width:48ch;margin:0}
+#fq .overall{margin-top:10px;display:inline-flex;gap:8px;align-items:baseline;background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13.5px}
+#fq .overall b{color:var(--green-deep);font-size:16px}
+#fq .part-heading{margin:24px 0 10px;display:flex;align-items:baseline;gap:10px}
+#fq .part-heading .tag{font-size:11.5px;letter-spacing:.02em;background:var(--gold-pale);color:var(--gold-ink);border-radius:6px;padding:2px 8px}
+#fq .module-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){#fq .module-grid{grid-template-columns:1fr}}
+#fq .module-card{text-align:left;background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:16px 16px 14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s ease;font-family:inherit;color:var(--ink)}
+#fq .module-card:hover{transform:translateY(-2px)}
+#fq .module-card h3{font-size:16px;margin:8px 0 2px}
+#fq .module-card .desc{font-size:12.5px;color:var(--ink-soft);min-height:32px}
+#fq .module-card .status{margin-top:10px;font-size:12.5px;display:flex;justify-content:space-between;align-items:center}
+#fq .progress-bar-mini{height:6px;border-radius:4px;background:var(--green-pale);overflow:hidden;margin-top:8px}
+#fq .progress-bar-mini>div{height:100%;background:var(--green-leaf)}
+#fq .badge-score{font-weight:700;color:var(--green-deep)}
+#fq .wrong-box{margin-top:18px;background:var(--wrong-pale);border-radius:14px;padding:12px 14px;font-size:13.5px}
+#fq .wrong-box .wt{font-weight:700;color:var(--wrong);margin-bottom:6px}
+#fq .chip{display:inline-block;margin:3px 6px 3px 0;padding:3px 10px;border-radius:999px;border:1px solid var(--wrong);background:var(--paper);color:var(--wrong);font-size:12.5px;cursor:pointer;font-family:inherit}
+#fq .quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+#fq .back-link{background:none;border:none;color:var(--green-deep);font-size:13.5px;cursor:pointer;padding:4px 0;font-family:inherit;white-space:nowrap}
+#fq .progress-track{flex:1;height:8px;border-radius:6px;background:var(--green-pale);margin:0 12px;overflow:hidden}
+#fq .progress-track>div{height:100%;background:var(--green-leaf);transition:width .25s ease}
+#fq .qcount{font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+#fq .card{background:var(--paper);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+#fq .lvrow{margin-bottom:8px}
+#fq .lv{font-size:11.5px;border-radius:6px;padding:2px 8px;background:var(--green-pale);color:var(--green-deep)}
+#fq .instr{font-size:12.5px;color:var(--ink-soft);margin-bottom:10px}
+#fq .prompt{font-size:18px;font-weight:600;margin-bottom:14px;line-height:1.9}
+#fq .prompt u{text-decoration:none;border-bottom:2px solid var(--coral);color:var(--coral);padding-bottom:1px}
+#fq .termbox{display:inline-block;font-size:22px;font-weight:700;color:var(--green-deep);border:2px solid var(--green-deep);border-radius:10px;padding:4px 18px;margin-bottom:12px}
+#fq .options{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+#fq .option-btn{text-align:left;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--paper);font-size:15px;color:var(--ink);cursor:pointer;font-family:inherit;display:flex;gap:10px;align-items:flex-start;width:100%}
+#fq .option-btn .letter{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink-soft)}
+#fq .option-btn:hover{border-color:var(--green-leaf)}
+#fq .option-btn.correct{border-color:var(--green-deep);background:var(--green-pale)}
+#fq .option-btn.correct .letter{background:var(--green-deep);border-color:var(--green-deep);color:#121811}
+#fq .option-btn.wrong{border-color:var(--wrong);background:var(--wrong-pale)}
+#fq .option-btn.wrong .letter{background:var(--wrong);border-color:var(--wrong);color:#121811}
+#fq .option-btn.disabled{cursor:default}
+#fq .option-btn.dim{opacity:.55}
+#fq .feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:13.5px}
+#fq .feedback.correct{background:var(--green-pale);color:var(--green-deep)}
+#fq .feedback.wrong{background:var(--wrong-pale);color:var(--wrong)}
+#fq .feedback .verdict{font-weight:700;margin-bottom:4px}
+#fq .feedback .explain{color:var(--ink);opacity:.92;line-height:1.85}
+#fq .feedback .explain b{color:var(--green-deep)}
+#fq .nav-row{display:flex;justify-content:space-between;margin-top:18px;gap:10px}
+#fq .btn{font-family:inherit;border-radius:12px;padding:10px 16px;font-size:14px;cursor:pointer;border:1.5px solid var(--border);background:var(--paper);color:var(--ink)}
+#fq .btn:disabled{opacity:.4;cursor:not-allowed}
+#fq .btn.primary{background:var(--green-deep);border-color:var(--green-deep);color:#121811;font-weight:700}
+#fq .btn.primary:disabled{background:var(--green-leaf);border-color:var(--green-leaf);opacity:.45}
+#fq .score-banner{text-align:center;background:var(--green-pale);border-radius:18px;padding:22px;margin-bottom:18px}
+#fq .score-banner .big{font-size:40px;font-weight:700;color:var(--green-deep);font-family:"Noto Serif JP","Iowan Old Style",Georgia,serif}
+#fq .score-banner .pct{color:var(--ink-soft);font-size:13.5px;margin-top:4px}
+#fq .qlist{display:flex;flex-direction:column;gap:8px}
+#fq .qrow{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;font-size:13.5px;color:var(--ink);text-align:left;width:100%}
+#fq .qrow .num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;background:var(--green-pale);color:var(--green-deep)}
+#fq .qrow.wrong .num{background:var(--wrong-pale);color:var(--wrong)}
+#fq .qrow .qtext{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#fq .qrow .icon{flex:0 0 auto;font-size:14px}
+#fq .summary-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+#fq footer.note{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:30px}
+</style>
+</head>
+<body>
+<div id="fq"><div id="app"></div></div>
+<script>
+(function(){
+"use strict";
+
+function svg(inner,size,sw){size=size||22;return '<svg class="ico" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||1.8)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+inner+'</svg>';}
+var ICONS={
+ temple:'<path d="M12 2.5v2.2"/><path d="M5.5 9.5 12 4.7l6.5 4.8"/><path d="M3 9.6h18"/><path d="M7 9.6v3"/><path d="M17 9.6v3"/><path d="M4 12.6h16"/><path d="M8 12.6v6.2"/><path d="M16 12.6v6.2"/><path d="M11 18.8v-4.2h2v4.2"/><path d="M3 18.8h18"/><path d="M5 21.2h14"/>',
+ book:'<path d="M12 6.5C10.3 5.2 7.8 4.7 4 5v13c3.8-.3 6.3.2 8 1.5 1.7-1.3 4.2-1.8 8-1.5V5c-3.8-.3-6.3.2-8 1.5z"/><path d="M12 6.5v13"/><path d="M6.5 9H9M6.5 12H9"/>',
+ puzzle:'<path d="M5 5h5a2 2 0 1 1 4 0h5v5a2 2 0 1 0 0 4v5h-5a2 2 0 1 0-4 0H5v-5a2 2 0 1 1 0-4z"/>',
+ swap:'<path d="M4 8h14"/><path d="m14.5 4 3.5 4-3.5 4"/><path d="M20 16H6"/><path d="m9.5 12-3.5 4 3.5 4"/>',
+ brush:'<path d="M20.5 3.5c-4 1.2-8.5 5.5-10.5 9.5l1.5 1.5c4-2 8.3-6.5 9-11z"/><path d="M10 13c-2.8.2-4 1.8-4 4 0 1.5-1 2.5-2.5 3 3.5 1.5 8.5.5 9.5-3.5"/>',
+ ok:'<circle cx="12" cy="12" r="9"/><path d="m7.8 12.3 2.8 2.8 5.6-6"/>',
+ ng:'<circle cx="12" cy="12" r="9"/><path d="m8.8 8.8 6.4 6.4M15.2 8.8l-6.4 6.4"/>',
+ no:'<rect x="4.5" y="4.5" width="15" height="15" rx="3.5" stroke-dasharray="3 3"/>',
+ redo:'<path d="M20 11a8 8 0 1 0-2.3 6.3"/><path d="M20 4.5V11h-6.5"/>'
+};
+function ico(n,size,cls){return '<span class="'+(cls||'')+'">'+svg(ICONS[n],size)+'</span>';}
+var MODULES={
+ 1:{title:"問題１　読み方",desc:"下線の言葉の読み方",icon:"book"},
+ 2:{title:"問題２　文脈",desc:"（　）に入れる言葉",icon:"puzzle"},
+ 3:{title:"問題３　近い意味",desc:"下線の言葉に意味が近いもの",icon:"swap"},
+ 4:{title:"問題４　使い方",desc:"言葉の使い方として最もよいもの",icon:"brush"}
+};
+var INSTR={
+ 1:"下線の言葉の読み方として最もよいものを、１・２・３・４から一つ選びなさい。",
+ 2:"（　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。",
+ 3:"下線の言葉に意味が最も近いものを、１・２・３・４から一つ選びなさい。",
+ 4:"次の言葉の使い方として最もよいものを、１・２・３・４から一つ選びなさい。"
+};
+var MODULE_ORDER=[1,2,3,4];
+var GROUPS=[{tag:"3月5日",title:"教えてもらったことは忘れる",mods:[1,2,3,4]}];
+var MARKS=["１","２","３","４"];
+var RAW=[
+// ===== 問題１ =====
+{part:1, stem:'手続きの際は、必ず{{本人}}が窓口に来てください。',
+ options:['ほんじん','ほんにん','ぼんにん','ほんびと'], correct:1,
+ explain:'「本人」讀作<b>ほんにん</b>（２），指當事人。１「ほんじん」是「本陣」的讀音，與「本人」字形、讀音都相近，是典型陷阱；３「ぼんにん」把「ほん」誤唸成濁音；４「ほんびと」是訓讀風的誤讀。'},
+{part:1, stem:'祖父は、腕のいい家具{{職人}}だった。',
+ options:['しょくじん','しょうにん','しょくにん','しきにん'], correct:2,
+ explain:'「職人」讀作<b>しょくにん</b>（３），指職人、專業技師。１「しょくじん」把「人」誤讀成「じん」；２「しょうにん」是「商人」的讀音，字形相近；４「しきにん」是把「職」誤讀成「しき」的不存在讀法。'},
+{part:1, stem:'彼は京都の老舗旅館で五年間{{修業した}}。',
+ options:['しゅうぎょうした','しゅぎょした','しゅきょうした','しゅぎょうした'], correct:3,
+ explain:'「修業」讀作<b>しゅぎょう</b>（４），「修業した」＝しゅぎょうした，意為修業、學藝。四個選項的送假名「した」完全相同，陷阱只在漢字讀音。１「しゅうぎょう」是「就業・終業」的長音混淆；２「しゅぎょ」漏掉長音「う」；３「しゅきょう」把濁音唸成清音，也容易與「宗教（しゅうきょう）」混淆。'},
+{part:1, stem:'彼は社会の{{底辺}}から努力を重ね、会社を立ち上げた。',
+ options:['ていへん','ていべん','たいへん','そこへん'], correct:0,
+ explain:'「底辺」讀作<b>ていへん</b>（１），指底層、最基礎的位置。２「ていべん」是濁音誤讀；３「たいへん」是「大変」的讀音，音近易混；４「そこへん」把「底」用訓讀、「辺」用音讀，音訓混用的誤讀。'},
+{part:1, stem:'もう少し{{辛抱すれば}}、きっと結果が出るはずだ。',
+ options:['しんぽうすれば','しんぼうすれば','じんぼうすれば','しんもうすれば'], correct:1,
+ explain:'「辛抱」讀作<b>しんぼう</b>（２），意為忍耐、熬過去。四個選項的送假名「すれば」完全相同，陷阱在漢字讀音。１「しんぽう」是半濁音誤讀（近「進歩」）；３「じんぼう」是「人望」的讀音；４「しんもう」是不存在的誤讀。'},
+{part:1, stem:'この経験は、{{一生}}忘れないだろう。',
+ options:['いっせい','いちしょう','いっしょう','いっしょ'], correct:2,
+ explain:'「一生」讀作<b>いっしょう</b>（３），意為一輩子。１「いっせい」是「一斉」的讀音；２「いちしょう」沒有促音化，是不存在的讀法；４「いっしょ」漏掉長音，容易與「一緒（いっしょ）」混淆。'},
+
+// ===== 問題２ =====
+{part:2, stem:'新入社員は、自分が会社の一員であるという（　）を持って行動してほしい。',
+ options:['自信','自慢','自立','自覚'], correct:3,
+ explain:'「自覚」＝自覺、意識到，「自覚を持つ」是常見搭配。１「自信」雖可說「自信を持つ」，但「一員であるという自信」語意不符；２「自慢」是炫耀、誇耀；３「自立」是獨立，不能搭配「という（　）を持つ」。'},
+{part:2, stem:'彼女は物静かだが、（　）の強い人で、一度決めたことは最後までやり通す。',
+ options:['芯','根','核','骨'], correct:0,
+ explain:'「芯が強い」＝內心堅強、有主見（從骨子裡）。２「根」多用於「根は優しい」等表示本性的說法；３「核」指核心之物，不用來形容人的個性；４「骨」雖有「骨のある人」的慣用語，但不能說「骨の強い人」。'},
+{part:2, stem:'十年の修業を経て、彼はようやく（　）の職人として認められた。',
+ options:['一人歩き','一人前','一人暮らし','一人占め'], correct:1,
+ explain:'「一人前」＝獨當一面、夠資格。１「一人歩き」是自行走動，或指消息、名聲脫離本人而擴散；３「一人暮らし」是一個人生活；４「一人占め」是獨占。'},
+{part:2, stem:'兄は両親に甘やかされ、子どもの頃からわがまま（　）に育った。',
+ options:['次第','任せ','放題','だらけ'], correct:2,
+ explain:'「わがまま放題」＝任性妄為。「放題」接在名詞或動詞連用形後，表示隨心所欲、毫無節制。１「次第」表示視……而定；２「任せ」多用於「運任せ」「成り行き任せ」；４「だらけ」表示滿是（不好的東西），都不能與「わがまま」搭配。'},
+{part:2, stem:'彼は仕事もせず、これまで一度も（　）働いたことがない。',
+ options:['ひたすら','辛うじて','大いに','まともに'], correct:3,
+ explain:'「まともに」＝認真地、正經地、好好地，常搭配否定。「まともに働いたことがない」＝從沒有好好工作過。１「ひたすら」是一心一意；２「辛うじて」是好不容易、勉強；３「大いに」是大大地，這些詞都不適合與「働いたことがない」搭配。'},
+{part:2, stem:'寿司職人を目指し、有名な店で五年間（　）を積んだ。',
+ options:['修業','修理','修復','修了'], correct:0,
+ explain:'「修業を積む」＝累積學藝經驗，是固定搭配。２「修理」是修理機器；３「修復」是修復（損壞的東西或關係）；４「修了」是完成課程，這三者都不能搭配「を積む」。'},
+{part:2, stem:'本気で合格したい（　）、毎日の勉強時間をもっと増やすべきだ。',
+ options:['にもかかわらず','のであれば','ばかりに','ものを'], correct:1,
+ explain:'「～のであれば」＝如果是……的話，用於承接對方（或自己）的決心後提出建議。１「にもかかわらず」表示儘管……卻……，前後語意不順；３「ばかりに」表示正因為……才（導致不好的結果）；４「ものを」表示本來可以……卻……（惋惜），都與後面的「べきだ」建議語氣不合。'},
+
+// ===== 問題３ =====
+{part:3, stem:'{{どっちみち}}行くことになるのだから、早めに準備しておこう。',
+ options:['できれば','どうしても','いずれにしても','せめて'], correct:2,
+ explain:'「どっちみち」＝不管怎樣、反正，意思最接近「いずれにしても」（３）。１「できれば」是如果可以的話；２「どうしても」是無論如何都（強調意志）；４「せめて」是至少。'},
+{part:3, stem:'出かける前に、戸締まりを{{しっかり}}確認した。',
+ options:['ざっと','急いで','なんとなく','念入りに'], correct:3,
+ explain:'「しっかり」＝好好地、紮實地，這裡表示仔細確實地確認，意思最接近「念入りに」（４）。１「ざっと」是大致看過；２「急いで」是匆忙地；３「なんとなく」是不知為何、隨意地，都與仔細確認相反。'},
+{part:3, stem:'いまは苦しいが、もう少し{{辛抱して}}ほしい。',
+ options:['我慢して','遠慮して','用心して','辞退して'], correct:0,
+ explain:'「辛抱する」＝忍耐、熬過去，意思最接近「我慢する」（１）。２「遠慮する」是客氣、避免；３「用心する」是小心提防；４「辞退する」是謝絕、推辭。'},
+{part:3, stem:'彼は家族のために{{一所懸命}}働いている。',
+ options:['気楽に','必死に','ときどき','いやいや'], correct:1,
+ explain:'「一所懸命」＝拼命地、全心全意地，意思最接近「必死に」（２）。１「気楽に」是輕鬆地；３「ときどき」是偶爾；４「いやいや」是不情願地，都與全力以赴相反。'},
+{part:3, stem:'彼は上司の注意も聞かず、{{好き勝手}}にふるまっている。',
+ options:['遠慮がちに','おおげさに','思いのままに','形式的に'], correct:2,
+ explain:'「好き勝手」＝隨心所欲、愛怎麼做就怎麼做，意思最接近「思いのままに」（３）。１「遠慮がちに」是客氣拘謹地，正好相反；２「おおげさに」是誇張地；４「形式的に」是形式上地。'},
+{part:3, stem:'景気の低迷が続くなか、新しい産業が少しずつ{{頭を持ち上げて}}きた。',
+ options:['姿を消して','衰えて','反対して','力をつけて'], correct:3,
+ explain:'「頭を持ち上げる」＝抬頭，指逐漸出頭、勢力增強、處境改善，意思最接近「力をつけて」（４）。１「姿を消す」是消失；２「衰える」是衰退，與原意相反；３「反対する」是反對，語意不符。'},
+
+// ===== 問題４ =====
+{part:4, word:'一生',
+ options:['あの先生に教えてもらったことは、一生忘れないだろう。','今日は忙しくて、一生何も食べられなかった。','この薬は、一生三回に分けて飲んでください。','彼女は一生の途中で、会社を辞めてしまった。'], correct:0,
+ explain:'「一生」＝一輩子，指整個人生的長度。１用來表示終身難忘，自然正確。２把「一生」用在一天的事情上，應說「一日中」；３服藥次數與「一生」無關，應說「一日に」；４「一生の途中」不自然，應說「人生の途中」。'},
+{part:4, word:'めったに',
+ options:['彼は毎日めったに運動している。','祖母の家は遠いので、めったに会えない。','今年は雨がめったに多くて、野菜がよく育った。','めったに遅刻した彼は、先生に叱られた。'], correct:1,
+ explain:'「めったに～ない」＝難得、很少……，後面必須搭配否定。２因為住得遠而很少見面，正確。１「毎日」與「めったに」意思矛盾，且後面沒有否定；３「めったに」不能修飾「多い」，也沒有否定；４「遅刻した」是肯定句，不能與「めったに」搭配。'},
+{part:4, word:'わがまま放題',
+ options:['お客様のご要望にお応えして、わがまま放題のサービスを提供しております。','彼の説明はわがまま放題で、とても分かりやすかった。','両親に甘やかされた彼は、わがまま放題にふるまって周囲を困らせた。','先生のわがまま放題な指導のおかげで、生徒は大きく成長した。'], correct:2,
+ explain:'「わがまま放題」＝任性妄為，帶有負面評價。３描述被寵壞的人任性行事而讓周圍困擾，正確。１把負面詞用在「サービス」並當作優點，語意不合；２「説明」與「わがまま」搭配不成立，後面的「分かりやすい」也是正面評價；４「わがまま放題な指導」卻讓學生成長，前後矛盾。'},
+{part:4, word:'嫌いだ',
+ options:['今日は雨だから、出かけるのは嫌いだ。','電車が遅れて、待たされるのが嫌いだった。','急に残業を頼まれて、嫌いな気持ちになった。','私は子どもの頃から納豆が嫌いで、一度も食べたことがない。'], correct:3,
+ explain:'「嫌いだ」表示持續性、一貫性的討厭；「嫌だ」則偏向一時性、當下情境的討厭。４「子どもの頃から」一直討厭納豆，屬於持續性，用「嫌い」正確。１２３都是針對當下或一次性的情況（下雨天、電車誤點、突然加班），應使用「嫌だ」。'},
+{part:4, word:'自分のものにする',
+ options:['毎日練習を重ね、師匠の技術を自分のものにした。','借りた本を自分のものにして、翌日図書館に返した。','彼は友達の意見を自分のものにして、きっぱり断った。','この料理は自分のものにするには、材料が足りない。'], correct:0,
+ explain:'「自分のものにする」＝化為己有、融會貫通，多用於技術、知識的學習。１把師傅的技術練到融會貫通，正確。２「自分のものにして」卻「返した」，前後矛盾；３把別人的意見化為己有卻「断った」，語意不通；４「料理を自分のものにする」搭配不自然，也與「材料が足りない」邏輯不合。'},
+{part:4, word:'底辺',
+ options:['富士山の底辺から山頂までは、約五時間かかる。','彼は社会の底辺から努力を重ね、一流の職人になった。','この箱の底辺には、小さな穴が開いている。','学校の底辺は、毎朝きれいに掃除されている。'], correct:1,
+ explain:'「底辺」＝底層、最基礎的位置，常用於社會階層或三角形的底邊。２說明從社會底層努力向上，正確。１爬山的起點應說「麓（ふもと）」；３箱子的底部應說「底」；４「学校の底辺」沒有這種用法。'}
+];
+var Q={};MODULE_ORDER.forEach(function(m){Q[m]=[];});
+RAW.forEach(function(r,i){r.no=i+1;Q[r.part].push(r);});
+var KEY="jlpt-n1-0305-v1";
+function newRec(){return {sel:null,correct:null};}
+function fresh(m){return Q[m].map(newRec);}
+function loadState(){try{var raw=localStorage.getItem(KEY);if(raw)return JSON.parse(raw);}catch(e){}return {};}
+function saveState(){try{localStorage.setItem(KEY,JSON.stringify(progress));}catch(e){}}
+var progress=loadState();
+MODULE_ORDER.forEach(function(m){
+ var p=progress[m];
+ var ok=Array.isArray(p)&&p.length===Q[m].length;
+ if(!ok)progress[m]=fresh(m);
+});
+var view="home",curModule=null,curIndex=0,summaryFrom=false;
+var appEl=document.getElementById("app");
+function moduleScore(m){
+ var arr=progress[m];
+ return {answered:arr.filter(function(r){return r.sel!==null;}).length,correct:arr.filter(function(r){return r.correct===true;}).length,total:arr.length};
+}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+function stemHtml(s){return esc(s).replace(/\{\{(.*?)\}\}/,"<u>$1</u>");}
+function plainStem(it){return it.part===4?it.word:it.stem.replace(/\{\{(.*?)\}\}/,"$1");}
+
+function renderHome(){
+ var ta=0,tc=0,tt=0,all=true,wrongs=[];
+ MODULE_ORDER.forEach(function(m){
+  var s=moduleScore(m);ta+=s.answered;tc+=s.correct;tt+=s.total;if(s.answered<s.total)all=false;
+  progress[m].forEach(function(r,i){if(r.sel!==null&&!r.correct)wrongs.push({m:m,i:i,no:Q[m][i].no});});
+ });
+ var overall="";
+ if(ta>0){overall='<div class="overall">已作答 <b>'+ta+'</b> / '+tt+' 題　·　'+(all?'總分':'目前答對')+' <b>'+tc+'</b>'+(all?' / '+tt:'')+'</div>';}
+ var wrongBox="";
+ if(wrongs.length){
+  wrongBox='<div class="wrong-box"><div class="wt">'+ico("ng",16,"ico-ng")+'答錯的題目（點一下回去看解析）</div>'+wrongs.map(function(w){return '<button class="chip" data-m="'+w.m+'" data-i="'+w.i+'">第 '+w.no+' 題</button>';}).join("")+'</div>';
+ }
+ function card(m){
+  var meta=MODULES[m],s=moduleScore(m),arr=Q[m];
+  var pct=s.total?Math.round(s.answered/s.total*100):0;
+  var st=s.answered===0?"尚未開始":(s.answered<s.total?("進行中 "+s.answered+"/"+s.total):("完成 · "+s.correct+"/"+s.total+" 分"));
+  return '<button class="module-card" data-module="'+m+'"><div class="icon">'+svg(ICONS[meta.icon],24)+'</div><h3>'+esc(meta.title)+'</h3><div class="desc">'+esc(meta.desc)+'（'+arr.length+' 題）</div><div class="progress-bar-mini"><div style="width:'+pct+'%"></div></div><div class="status"><span>'+esc(st)+'</span>'+(s.answered===s.total&&s.total>0?'<span class="badge-score">'+s.correct+'/'+s.total+'</span>':'')+'</div></button>';
+ }
+ var groups=GROUPS.map(function(g){
+  return '<div class="part-heading"><span class="tag">'+g.tag+'</span><h2 style="font-size:16px;margin:0;">'+g.title+'</h2></div><div class="module-grid">'+g.mods.map(card).join("")+'</div>';
+ }).join("");
+ appEl.innerHTML=
+ '<div class="topbar"><div class="mark">'+svg(ICONS.temple,28)+'</div><div><h1>3月5日（教えてもらったことは忘れる）單字測驗</h1><div class="sub">JLPT N1 文字語彙 · 全 '+RAW.length+' 題</div></div></div>'+
+ '<div class="hero"><h2 style="font-size:17px;margin-bottom:6px;">選一個題型開始作答</h2><p>每答完一題就會立刻顯示對錯與解析。題號與選項順序固定，可以分批完成，進度會自動保留，隨時回首頁換一個題型。</p>'+overall+'</div>'+
+ groups+wrongBox+
+ '<footer class="note">依 3月5日 單字表自製練習，僅供學習使用。</footer>';
+ Array.prototype.forEach.call(appEl.querySelectorAll(".module-card"),function(btn){
+  btn.addEventListener("click",function(){
+   curModule=parseInt(btn.getAttribute("data-module"),10);
+   var idx=progress[curModule].findIndex(function(r){return r.sel===null;});
+   summaryFrom=false;
+   if(idx===-1){view="summary";}else{curIndex=idx;view="quiz";}
+   render();
+  });
+ });
+ Array.prototype.forEach.call(appEl.querySelectorAll(".chip"),function(btn){
+  btn.addEventListener("click",function(){
+   curModule=parseInt(btn.getAttribute("data-m"),10);curIndex=parseInt(btn.getAttribute("data-i"),10);
+   summaryFrom=false;view="quiz";render();
+  });
+ });
+}
+
+function renderQuiz(){
+ var list=Q[curModule],item=list[curIndex],rec=progress[curModule][curIndex];
+ var answered=rec.sel!==null,total=list.length,pct=Math.round((curIndex+1)/total*100);
+ var optionsHtml=item.options.map(function(o,k){
+  var cls="option-btn";
+  if(answered){cls+=" disabled";if(k===item.correct)cls+=" correct";else if(k===rec.sel)cls+=" wrong";else cls+=" dim";}
+  return '<button class="'+cls+'" data-idx="'+k+'"><span class="letter">'+MARKS[k]+'</span><span>'+esc(o)+'</span></button>';
+ }).join("");
+ var promptHtml;
+ if(item.part===4){promptHtml='<div class="termbox">'+esc(item.word)+'</div><div class="prompt" style="font-size:15px;font-weight:500;margin-bottom:12px;">この言葉の使い方として最もよいものはどれですか。</div>';}
+ else{promptHtml='<div class="prompt">'+stemHtml(item.stem)+'</div>';}
+ var fb="";
+ if(answered){
+  var ok=rec.correct;
+  fb='<div class="feedback '+(ok?"correct":"wrong")+'"><div class="verdict">'+(ok?ico("ok",18,"ico-ok")+"答對了！":ico("ng",18,"ico-ng")+"答錯了，正確答案是「"+MARKS[item.correct]+" "+esc(item.options[item.correct])+"」")+'</div><div class="explain">'+item.explain+'</div></div>';
+ }
+ var isLast=curIndex===total-1;
+ var nextLabel=summaryFrom?"返回總覽":(isLast?"完成本題型 →":"下一題 →");
+ appEl.innerHTML=
+ '<div class="quiz-header"><button class="back-link" id="btnBack">← '+(summaryFrom?"返回總覽":"回首頁")+'</button><div class="progress-track"><div style="width:'+pct+'%"></div></div><div class="qcount">第 '+(curIndex+1)+' / '+total+' 題</div></div>'+
+ '<div class="card"><div class="lvrow"><span class="lv">'+esc(MODULES[curModule].title)+' · 全體第 '+item.no+' 題</span></div><div class="instr">'+esc(INSTR[curModule])+'</div>'+promptHtml+'<div class="options">'+optionsHtml+'</div>'+fb+'</div>'+
+ '<div class="nav-row"><button class="btn" id="btnPrev" '+(curIndex===0?"disabled":"")+'>← 上一題</button><button class="btn primary" id="btnNext" '+(!answered?"disabled":"")+'>'+nextLabel+'</button></div>';
+ appEl.querySelector("#btnBack").addEventListener("click",function(){view=summaryFrom?"summary":"home";summaryFrom=false;render();});
+ appEl.querySelector("#btnPrev").addEventListener("click",function(){if(curIndex>0){curIndex-=1;render();}});
+ appEl.querySelector("#btnNext").addEventListener("click",function(){
+  if(summaryFrom){view="summary";summaryFrom=false;render();return;}
+  if(isLast){view="summary";render();return;}
+  curIndex+=1;render();
+ });
+ if(!answered){
+  Array.prototype.forEach.call(appEl.querySelectorAll(".option-btn"),function(btn){
+   btn.addEventListener("click",function(){
+    var idx=parseInt(btn.getAttribute("data-idx"),10);
+    rec.sel=idx;rec.correct=(idx===item.correct);saveState();render();
+   });
+  });
+ }
+}
+
+function renderSummary(){
+ var list=Q[curModule],arr=progress[curModule];
+ var correct=0;
+ list.forEach(function(it,i){if(arr[i].correct===true)correct++;});
+ var total=list.length,pct=Math.round(correct/total*100);
+ var rows=list.map(function(it,idx){
+  var rec=arr[idx];
+  var wrong=rec.sel!==null&&!rec.correct;
+  var icon=rec.sel===null?ico("no",18,"ico-no"):(rec.correct?ico("ok",18,"ico-ok"):ico("ng",18,"ico-ng"));
+  return '<button class="qrow '+(wrong?"wrong":"")+'" data-idx="'+idx+'"><span class="num">'+it.no+'</span><span class="qtext">'+esc(plainStem(it))+'</span><span class="icon">'+icon+'</span></button>';
+ }).join("");
+ appEl.innerHTML=
+ '<div class="quiz-header"><button class="back-link" id="btnBack">← 回首頁</button><div class="qcount">'+esc(MODULES[curModule].title)+'</div></div>'+
+ '<div class="score-banner"><div class="big">'+correct+' / '+total+'</div><div class="pct">答對率 '+pct+'%</div></div>'+
+ '<div class="qlist">'+rows+'</div>'+
+ '<div class="summary-actions"><button class="btn" id="btnRetake">'+ico("redo",16,"")+' 重新測驗這個題型</button><button class="btn primary" id="btnHome2">回首頁</button></div>';
+ appEl.querySelector("#btnBack").addEventListener("click",function(){view="home";render();});
+ appEl.querySelector("#btnHome2").addEventListener("click",function(){view="home";render();});
+ appEl.querySelector("#btnRetake").addEventListener("click",function(){
+  progress[curModule]=fresh(curModule);saveState();curIndex=0;summaryFrom=false;view="quiz";render();
+ });
+ Array.prototype.forEach.call(appEl.querySelectorAll(".qrow"),function(btn){
+  btn.addEventListener("click",function(){curIndex=parseInt(btn.getAttribute("data-idx"),10);summaryFrom=true;view="quiz";render();});
+ });
+}
+
+function render(){
+ window.scrollTo(0,0);
+ if(view==="home")renderHome();
+ else if(view==="quiz")renderQuiz();
+ else renderSummary();
+}
+render();
+})();
+</script>
+</body>
+</html>
